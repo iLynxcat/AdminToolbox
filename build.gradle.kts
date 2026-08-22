@@ -3,7 +3,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 plugins {
     id("java")
     id("com.gradleup.shadow") version "8.3.9"
-    id("xyz.jpenilla.run-paper") version "2.3.1"
+    id("xyz.jpenilla.run-paper") version "3.1.0"
 }
 
 group = "org.modernbeta.admintoolbox"
@@ -71,7 +71,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
     compileOnly("net.luckperms:api:5.4")
     compileOnly("de.bluecolored:bluemap-api:2.7.4")
     compileOnly("me.clip:placeholderapi:2.11.7")
@@ -103,7 +103,7 @@ tasks.shadowJar {
 }
 
 val plugins = runPaper.downloadPluginsSpec {
-    modrinth("viaversion", "5.8.1") // makes testing much easier
+    modrinth("viaversion", "5.11.0") // makes testing much easier
     modrinth("bluemap", "5.5-paper")
     modrinth("placeholderapi", "2.11.7")
     modrinth("tab-was-taken", "5.4.0")
@@ -111,7 +111,7 @@ val plugins = runPaper.downloadPluginsSpec {
 
 // Paper (non-Folia!) server
 tasks.runServer {
-    minecraftVersion("1.20.4")
+    minecraftVersion("1.21.4")
     downloadPlugins {
         from(plugins)
         // Add Folia-incompatible plugins below
@@ -121,7 +121,7 @@ tasks.runServer {
 
 // Folia server
 runPaper.folia.registerTask {
-    minecraftVersion("1.20.4")
+    minecraftVersion("1.21.4")
     downloadPlugins.from(plugins)
     downloadPlugins {
         // LuckPerms for Folia
