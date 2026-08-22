@@ -1,5 +1,8 @@
 package org.modernbeta.admintoolbox;
 
+import io.papermc.paper.command.brigadier.Commands;
+import io.papermc.paper.plugin.lifecycle.event.registrar.RegistrarEvent;
+import io.papermc.paper.registry.event.RegistryEvent;
 import net.luckperms.api.LuckPerms;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -9,6 +12,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.modernbeta.admintoolbox.command.YellCommand;
 import org.modernbeta.admintoolbox.commands.*;
 import org.modernbeta.admintoolbox.integration.BlueMapIntegration;
 import org.modernbeta.admintoolbox.integration.luckperms.LuckPermsIntegration;
@@ -16,6 +20,8 @@ import org.modernbeta.admintoolbox.integration.placeholderapi.PlaceholderAPIInte
 import org.modernbeta.admintoolbox.managers.FreezeManager;
 import org.modernbeta.admintoolbox.managers.StreamerModeManager;
 import org.modernbeta.admintoolbox.managers.admin.AdminManager;
+
+import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 
 import javax.annotation.Nullable;
 import java.io.File;
@@ -77,9 +83,11 @@ public class AdminToolboxPlugin extends JavaPlugin {
 		getCommand("forward").setExecutor(new GoForwardCommand());
 		getCommand("freeze").setExecutor(new FreezeCommand());
 		getCommand("unfreeze").setExecutor(new UnfreezeCommand());
-		getCommand("yell").setExecutor(new YellCommand());
 		getCommand("spawn").setExecutor(new SpawnCommand());
 		getCommand("fullbright").setExecutor(new FullbrightCommand());
+
+		getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
+			this::registerCommands);
 
 		initializeConfig();
 
@@ -229,4 +237,11 @@ public class AdminToolboxPlugin extends JavaPlugin {
 		saveConfig();
 		reloadConfig();
 	}
+
+	private void registerCommands(RegistrarEvent<Commands> event) {
+		var registrar = event.registrar();
+
+		new YellCommand().register(registrar);
+	}
+
 }

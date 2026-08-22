@@ -101,11 +101,6 @@ commands:
     usage: /<command> <player>
     permission: admintoolbox.freeze
     aliases: [ release ]
-  yell:
-    description: Display a large red title message on a player's screen.
-    usage: /<command> <player> <message>
-    permission: admintoolbox.yell
-    aliases: [ y, adminsay ]
   spawn:
     description: Enter admin mode at a given world spawn.
     usage: /<command> [world]
